@@ -1,0 +1,54 @@
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@200;300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-family: "Bricolage Grotesque", sans-serif;
+  --primary: #4770FF;
+  --black: #1A1F2C;
+  --light-black: #576076;
+  --white: #ffffff;
+  --dark-theme-bg: #000;
+  --dark-theme-black: #0E1018;
+  --dark-theme-white: #f0f2f5;
+  --dark-theme-light-white: rgba(240, 242, 245, 0.7);
+  --paragraph: #616670;
+  --background: #F0F2F5;
+  --font-size: 16px;
+  --font-weight: 400;
+  --line-height: 1.6em;
+  --transition: all 0.1s ease-out 0s;
+  --border: #DBDFE5;
+}
+
+body {
+  font-family: var(--font-family);
+  font-size: var(--font-size);
+  font-weight: var(--font-weight);
+  line-height: var(--line-height);
+  background-color: var(--background);
+  color: var(--black);
+  transition: var(--transition);
+}
+
+.dark {
+  background-color: var(--dark-theme-bg);
+  color: var(--dark-theme-white);
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
