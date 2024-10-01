@@ -6,7 +6,7 @@ import Image from "next/image"
 import { useTheme } from '@/context/ThemeContext'
 import Footer from '@/components/Footer'
 import { motion, useMotionValue, useTransform } from 'framer-motion'
-import { Github, Linkedin, Twitter, Facebook, Briefcase, Code, Palette, Smartphone } from 'lucide-react'
+import { Github, Linkedin, Twitter, Facebook, Briefcase, Code, Palette, Smartphone, Brain, Sparkles, Zap } from 'lucide-react'
 
 const MotionDiv = motion.div
 
@@ -32,8 +32,16 @@ export default function Portfolio() {
 
   const gradientText = "bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-500"
 
+  const buttonStyle = "bg-gradient-to-r from-blue-500 to-purple-500 text-white hover:from-blue-600 hover:to-purple-600 rounded-md px-6 py-2 shadow-md transition-all duration-300"
+
   return (
-    <div className={`min-h-screen font-['Bricolage_Grotesque',sans-serif] ${bgStyle} pt-24 p-8 transition-colors duration-500`}>
+    <div className={`min-h-screen font-['Bricolage_Grotesque',sans-serif] ${bgStyle} pt-24 p-8 transition-colors duration-500 relative overflow-hidden`}>
+      {/* Add AI-inspired background elements */}
+      <div className="absolute inset-0 opacity-10 pointer-events-none">
+        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-500 rounded-full filter blur-3xl animate-pulse"></div>
+        <div className="absolute top-3/4 right-1/4 w-48 h-48 bg-purple-500 rounded-full filter blur-3xl animate-pulse"></div>
+      </div>
+
       <div className="max-w-8xl mx-auto grid md:grid-cols-3 gap-8 mt-8">
         <motion.div style={{ perspective: 2000 }} className="md:col-span-1">
           <Card 
@@ -67,10 +75,10 @@ export default function Portfolio() {
                 Full Stack Developer & Product Designer
               </p>
               <div className="flex space-x-4 mb-6">
-                <Button className="bg-blue-600 text-white hover:bg-blue-700 rounded-full px-6 py-2 transition-all duration-300">
+                <Button className={buttonStyle}>
                   Book A call
                 </Button>
-                <Button variant="outline" className={`${isDarkMode ? 'border-gray-600 text-white' : 'border-gray-300 text-black'} rounded-full px-6 py-2 transition-all duration-300`}>
+                <Button className={`${buttonStyle} bg-none bg-transparent border-2 border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white`}>
                   Copy Email
                 </Button>
               </div>
@@ -78,9 +86,7 @@ export default function Portfolio() {
                 {[Github, Linkedin, Twitter, Facebook].map((Icon, index) => (
                   <Button
                     key={index}
-                    variant="ghost"
-                    size="icon"
-                    className={`${isDarkMode ? 'text-gray-300 hover:bg-gray-700' : 'text-gray-600 hover:bg-gray-200'} rounded-full transition-all duration-300`}
+                    className={`${isDarkMode ? 'bg-gray-700 text-gray-300 hover:bg-gray-600' : 'bg-gray-200 text-gray-600 hover:bg-gray-300'} p-2 rounded-md transition-all duration-300`}
                   >
                     <Icon className="w-5 h-5" />
                   </Button>
@@ -90,8 +96,8 @@ export default function Portfolio() {
           </Card>
         </motion.div>
 
-        <div className="md:col-span-2 space-y-8">
-          <Card isDarkMode={isDarkMode} className={`p-8 rounded-3xl ${cardStyle} transition-all duration-500`}>
+        <div className="md:col-span-1 space-y-8 h-full">
+          <Card isDarkMode={isDarkMode} className={`p-14 rounded-3xl ${cardStyle} transition-all duration-500`}>
             <h3 className={`text-2xl font-bold mb-6 ${gradientText}`}>Work Experience</h3>
             <div className="space-y-6">
               {[
@@ -145,6 +151,35 @@ export default function Portfolio() {
             </div>
           </Card>
         </div>
+
+        <div className="md:col-span-1 space-y-8">
+          <Card isDarkMode={isDarkMode} className={`p-8 rounded-3xl ${cardStyle} transition-all duration-500`}>
+            <div className="flex justify-between items-center mb-6">
+              <h3 className={`text-2xl font-bold ${gradientText}`}>Recent Projects</h3>
+              <a href="#" className={`${accentColor} text-sm hover:underline`}>View All →</a>
+            </div>
+            <div className="space-y-6">
+              {[1, 2, 3].map((project, index) => (
+                <MotionDiv 
+                  key={project}
+                  className="relative h-48 rounded-xl overflow-hidden shadow-lg"
+                  whileHover={{ scale: 1.03, boxShadow: "0 10px 20px rgba(0,0,0,0.2)" }}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                >
+                  <Image src={`/project-${project}.jpg`} alt={`Project ${project}`} layout="fill" objectFit="cover" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-60"></div>
+                  <div className="absolute bottom-4 left-4 right-4">
+                    <Badge className={`mb-2 ${isDarkMode ? 'bg-blue-500 text-white' : 'bg-purple-500 text-white'}`}>Product Design</Badge>
+                    <h4 className="text-white text-lg font-semibold mb-1">Project Name {project}</h4>
+                    <p className="text-gray-200 text-sm">Short project description goes here.</p>
+                  </div>
+                </MotionDiv>
+              ))}
+            </div>
+          </Card>
+        </div>
       </div>
 
       <div className="mt-12 grid md:grid-cols-3 gap-8">
@@ -189,39 +224,57 @@ export default function Portfolio() {
             <p className={`mb-6 ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
               I'm always open for new opportunities and exciting projects.
             </p>
-            <Button className="bg-gradient-to-r from-blue-500 to-purple-500 text-white hover:from-blue-600 hover:to-purple-600 rounded-full px-8 py-3 text-lg shadow-md">
+            <Button className={buttonStyle}>
               Let's Talk
             </Button>
           </MotionDiv>
         </Card>
       </div>
 
+      {/* Add Einstein Labs section */}
       <div className="mt-12">
-        <Card isDarkMode={isDarkMode} className={`p-8 rounded-3xl ${cardStyle} transition-all duration-500`}>
-          <div className="flex justify-between items-center mb-6">
-            <h3 className={`text-2xl font-bold ${gradientText}`}>Recent Projects</h3>
-            <a href="#" className={`${accentColor} text-sm hover:underline`}>View All →</a>
-          </div>
-          <div className="grid md:grid-cols-2 gap-8">
-            {[1, 2].map((project, index) => (
-              <MotionDiv 
-                key={project}
-                className="relative h-64 rounded-xl overflow-hidden shadow-lg"
-                whileHover={{ scale: 1.03, boxShadow: "0 10px 20px rgba(0,0,0,0.2)" }}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-              >
-                <Image src={`/project-${project}.jpg`} alt={`Project ${project}`} layout="fill" objectFit="cover" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-60"></div>
-                <div className="absolute bottom-4 left-4 right-4">
-                  <Badge className={`mb-2 ${isDarkMode ? 'bg-blue-500 text-white' : 'bg-purple-500 text-white'}`}>Product Design</Badge>
-                  <h4 className="text-white text-lg font-semibold mb-1">Project Name {project}</h4>
-                  <p className="text-gray-200 text-sm">Short project description goes here.</p>
-                </div>
-              </MotionDiv>
-            ))}
-          </div>
+        <Card isDarkMode={isDarkMode} className={`p-8 rounded-3xl ${cardStyle} transition-all duration-500 relative overflow-hidden`}>
+          <div className="absolute inset-0 opacity-10 bg-gradient-to-br from-blue-400 to-purple-600"></div>
+          <MotionDiv
+            className="relative z-10"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <div className="flex items-center mb-6">
+              <Brain className={`w-10 h-10 ${accentColor} mr-4`} />
+              <h3 className={`text-3xl font-bold ${gradientText}`}>Transform your business with Einstein Labs - My AI Agency</h3>
+            </div>
+            <p className={`mb-6 ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+              Revolutionizing industries with cutting-edge AI solutions. At Einstein Labs, we're pushing the boundaries of artificial intelligence to solve complex problems and create innovative products.
+            </p>
+            <div className="grid md:grid-cols-3 gap-6 mb-8">
+              {[
+                { icon: Sparkles, title: "AI Innovation", description: "Pioneering new AI technologies" },
+                { icon: Zap, title: "Rapid Deployment", description: "Fast integration of AI solutions" },
+                { icon: Brain, title: "Custom AI Models", description: "Tailored AI for your specific needs" },
+              ].map((feature, index) => (
+                <MotionDiv
+                  key={index}
+                  className={`p-4 rounded-xl ${isDarkMode ? 'bg-gray-700' : 'bg-gray-100'} flex flex-col items-center text-center`}
+                  whileHover={{ y: -5, boxShadow: "0 10px 20px rgba(0,0,0,0.1)" }}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.3, delay: index * 0.1 }}
+                >
+                  <feature.icon className={`w-8 h-8 ${accentColor} mb-2`} />
+                  <h4 className="font-semibold mb-1">{feature.title}</h4>
+                  <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>{feature.description}</p>
+                </MotionDiv>
+              ))}
+            </div>
+            <Button 
+              className={buttonStyle}
+              onClick={() => window.open('https://einstein-labs.ai', '_blank')}
+            >
+              Visit Einstein Labs
+            </Button>
+          </MotionDiv>
         </Card>
       </div>
     </div>
