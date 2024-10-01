@@ -10,8 +10,8 @@ Additionally in my day job, I am also a product manager who have built and manag
 The technology stack of the portfolio website:
 
 **Frontend**
-- ReactJs
+- Next Js
 - TailwindCSS
 - Framer motion
-- Three JS
+- Shadcn UI
 - React three fiber
