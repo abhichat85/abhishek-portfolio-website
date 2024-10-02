@@ -12,6 +12,26 @@ import StarsCanvas from "@/components/Stars"
 const MotionDiv = motion.div
 const MotionCard = motion(Card)
 
+const Card3D = ({ children, className }) => {
+  const x = useMotionValue(0)
+  const y = useMotionValue(0)
+  const rotateX = useTransform(y, [-300, 300], [30, -30])
+  const rotateY = useTransform(x, [-300, 300], [-30, 30])
+
+  return (
+    <motion.div
+      style={{ x, y, rotateX, rotateY, z: 100 }}
+      drag
+      dragElastic={0.1}
+      dragConstraints={{ top: 0, left: 0, right: 0, bottom: 0 }}
+      whileTap={{ cursor: 'grabbing' }}
+      className={`${className} cursor-grab`}
+    >
+      {children}
+    </motion.div>
+  )
+}
+
 export default function About() {
   const { isDarkMode } = useTheme()
 
@@ -20,8 +40,8 @@ export default function About() {
     : 'bg-gradient-to-br from-gray-50 to-white text-gray-800'
 
   const cardStyle = isDarkMode
-    ? 'bg-gray-800 border-gray-700'
-    : 'bg-white border-gray-200'
+    ? 'bg-gray-800/30 border-gray-700/50 backdrop-blur-md'
+    : 'bg-white/30 border-gray-200/50 backdrop-blur-md'
 
   const gradientText = "bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-500"
   const buttonStyle = "bg-gradient-to-r from-blue-500 to-purple-500 text-white hover:from-blue-600 hover:to-purple-600 rounded-md px-6 py-2 shadow-md transition-all duration-300"
@@ -58,22 +78,17 @@ export default function About() {
         <StarsCanvas />
       </div>
       <div className="relative z-10">
-        {/* AI-inspired background elements */}
-        <div className="absolute inset-0 opacity-10 pointer-events-none">
-          <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-500 rounded-full filter blur-3xl animate-pulse"></div>
-          <div className="absolute top-3/4 right-1/4 w-48 h-48 bg-purple-500 rounded-full filter blur-3xl animate-pulse"></div>
+        <div className="absolute inset-0 opacity-30 pointer-events-none">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500 rounded-full filter blur-3xl animate-pulse"></div>
+          <div className="absolute top-3/4 right-1/4 w-64 h-64 bg-purple-500 rounded-full filter blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-1/4 left-1/2 w-80 h-80 bg-pink-500 rounded-full filter blur-3xl animate-pulse"></div>
         </div>
 
         <div className="max-w-8xl mx-auto grid md:grid-cols-3 gap-8 mt-12 mb-12">
-          <motion.div style={{ perspective: 2000 }} className="md:col-span-1 h-full">
+          <Card3D className="md:col-span-1 h-full">
             <MotionCard 
               isDarkMode={isDarkMode}
               className={`p-8 rounded-2xl ${cardStyle} shadow-lg transition-all duration-300 hover:shadow-xl transform-gpu h-full flex flex-col justify-between`}
-              style={{ x: createMotionValues().x, y: createMotionValues().y, rotateX: createMotionValues().rotateX, rotateY: createMotionValues().rotateY, z: 100 } as any}
-              drag
-              dragElastic={0.16}
-              dragConstraints={{ top: 0, left: 0, right: 0, bottom: 0 }}
-              whileTap={{ cursor: 'grabbing' }}
             >
               <MotionDiv
                 initial={{ opacity: 0, y: 20 }}
@@ -116,9 +131,9 @@ export default function About() {
                 </div>
               </MotionDiv>
             </MotionCard>
-          </motion.div>
+          </Card3D>
 
-          <div className="md:col-span-2 h-full">
+          <Card3D className="md:col-span-2 h-full">
             <Card isDarkMode={isDarkMode} className={`${cardStyle} p-8 rounded-2xl shadow-[inset_-12px_-8px_40px_#46464620] transition-all duration-500 h-full flex flex-col`}>
               <h1 className={`text-4xl font-bold mb-4 ${gradientText}`}>About Me</h1>
               <p className={`mb-8 ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
@@ -175,7 +190,7 @@ export default function About() {
                 ))}
               </div>
             </Card>
-          </div>
+          </Card3D>
         </div>
       </div>
     </div>

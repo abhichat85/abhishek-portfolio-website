@@ -21,7 +21,7 @@ export default function Navigation() {
 
   const isActive = (path: string) => pathname === path ? activeTextStyle : textStyle
 
-  const buttonStyle = "bg-gradient-to-r from-blue-500 to-purple-500 text-white hover:from-blue-600 hover:to-purple-600 rounded-md px-6 py-2 shadow-md transition-all duration-300"
+  const buttonStyle = "bg-gradient-to-r from-blue-500 to-purple-500 text-white hover:from-blue-600 hover:to-purple-600 rounded-xl px-6 py-2 shadow-md transition-all duration-300"
 
   return (
     <nav className={`fixed w-full z-10 ${bgStyle} transition-colors duration-500`}>

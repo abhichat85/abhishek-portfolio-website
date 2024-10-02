@@ -5,13 +5,33 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { useTheme } from '@/context/ThemeContext'
 import Image from "next/image"
-import { motion } from 'framer-motion'
+import { motion, useMotionValue, useTransform } from 'framer-motion'
 import { Send, Phone, Mail, MapPin } from "lucide-react"
 import StarsCanvas from "@/components/Stars"
 import EarthCanvas from "@/components/Earth"
 import { slideIn } from "@/lib/utils"
 
 const MotionDiv = motion.div
+
+const Card3D = ({ children, className }) => {
+  const x = useMotionValue(0)
+  const y = useMotionValue(0)
+  const rotateX = useTransform(y, [-300, 300], [30, -30])
+  const rotateY = useTransform(x, [-300, 300], [-30, 30])
+
+  return (
+    <motion.div
+      style={{ x, y, rotateX, rotateY, z: 100 }}
+      drag
+      dragElastic={0.1}
+      dragConstraints={{ top: 0, left: 0, right: 0, bottom: 0 }}
+      whileTap={{ cursor: 'grabbing' }}
+      className={`${className} cursor-grab`}
+    >
+      {children}
+    </motion.div>
+  )
+}
 
 export default function Contact() {
   const { isDarkMode } = useTheme()
@@ -26,8 +46,8 @@ export default function Contact() {
     : 'bg-gradient-to-br from-gray-50 to-white text-gray-800'
 
   const cardStyle = isDarkMode
-    ? 'bg-gray-800 border-gray-700'
-    : 'bg-white border-gray-200'
+    ? 'bg-gray-800/30 border-gray-700/50 backdrop-blur-md'
+    : 'bg-white/30 border-gray-200/50 backdrop-blur-md'
 
   const gradientText = "bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-500"
   const buttonStyle = "bg-gradient-to-r from-blue-500 to-purple-500 text-white hover:from-blue-600 hover:to-purple-600 rounded-md px-4 py-2 shadow-md transition-all duration-300"
@@ -49,19 +69,14 @@ export default function Contact() {
         <StarsCanvas />
       </div>
       <div className="relative z-10">
-        {/* AI-inspired background elements */}
-        <div className="absolute inset-0 opacity-10 pointer-events-none">
-          <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-500 rounded-full filter blur-3xl animate-pulse"></div>
-          <div className="absolute top-3/4 right-1/4 w-48 h-48 bg-purple-500 rounded-full filter blur-3xl animate-pulse"></div>
+        <div className="absolute inset-0 opacity-30 pointer-events-none">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500 rounded-full filter blur-3xl animate-pulse"></div>
+          <div className="absolute top-3/4 right-1/4 w-64 h-64 bg-purple-500 rounded-full filter blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-1/4 left-1/2 w-80 h-80 bg-pink-500 rounded-full filter blur-3xl animate-pulse"></div>
         </div>
 
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-6 mt-8 mb-8">
-          <MotionDiv
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
-            className="h-full"
-          >
+          <Card3D className="h-full">
             <Card className={`${cardStyle} p-6 rounded-2xl shadow-lg transition-all duration-300 hover:shadow-xl h-full flex flex-col justify-between`}>
               <div className="flex-grow flex flex-col">
                 <h2 className={`text-2xl font-bold mb-4 ${gradientText}`}>Let's Connect</h2>
@@ -90,14 +105,9 @@ export default function Contact() {
                 </div>
               </div>
             </Card>
-          </MotionDiv>
+          </Card3D>
 
-          <MotionDiv
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
-            className="h-full"
-          >
+          <Card3D className="h-full">
             <Card className={`${cardStyle} p-6 rounded-2xl shadow-lg transition-all duration-300 hover:shadow-xl h-full flex flex-col`}>
               <h2 className={`text-2xl font-bold mb-4 ${gradientText}`}>Get in Touch</h2>
               <form onSubmit={handleSubmit} className="space-y-4 flex-grow flex flex-col">
@@ -141,7 +151,7 @@ export default function Contact() {
                 </Button>
               </form>
             </Card>
-          </MotionDiv>
+          </Card3D>
         </div>
       </div>
     </div>
