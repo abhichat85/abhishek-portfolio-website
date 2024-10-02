@@ -13,12 +13,13 @@ export default function Navigation() {
   const pathname = usePathname()
 
   const bgStyle = isDarkMode
-    ? 'bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-white'
-    : 'bg-gradient-to-r from-blue-50 via-indigo-50 to-purple-50 text-gray-800'
+    ? 'bg-gray-900/70 backdrop-blur-md border-b border-gray-800'
+    : 'bg-white/70 backdrop-blur-md border-b border-gray-200'
 
-  const isActive = (path: string) => pathname === path ? 'text-blue-500 font-semibold' : ''
+  const textStyle = isDarkMode ? 'text-gray-300' : 'text-gray-700'
+  const activeTextStyle = 'text-blue-500 font-semibold'
 
-  const linkStyle = "text-gray-500"; // Define the linkStyle variable
+  const isActive = (path: string) => pathname === path ? activeTextStyle : textStyle
 
   const buttonStyle = "bg-gradient-to-r from-blue-500 to-purple-500 text-white hover:from-blue-600 hover:to-purple-600 rounded-md px-6 py-2 shadow-md transition-all duration-300"
 
@@ -53,25 +54,20 @@ export default function Navigation() {
           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
             <Button 
               onClick={toggleTheme} 
-              className="p-2 rounded-full focus:outline-none"
+              className="p-2 focus:outline-none bg-transparent"
               aria-label="Toggle theme"
             >
-              {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+              {isDarkMode ? <Sun className="w-5 h-5 text-yellow-400" /> : <Moon className="w-5 h-5" />}
             </Button>
           </motion.div>
           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-            <Button className={`${buttonStyle} flex items-center rounded-lg`}>
+            <Button className={`${buttonStyle} flex items-center rounded-lg bg-opacity-80 backdrop-blur-sm`}>
               <MessageSquare className="w-4 h-4 mr-2" />
               Let's Talk
             </Button>
           </motion.div>
         </div>
       </div>
-      {/* <div className="flex space-x-4">
-        <Link href="" target="_blank" rel="noopener noreferrer" className={`${linkStyle} hover:text-blue-400 transition-colors duration-300`}>
-          Einstein Labs
-        </Link>
-      </div> */}
     </nav>
   )
 }
