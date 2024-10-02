@@ -13,7 +13,7 @@ import StarsCanvas from "@/components/Stars"
 const MotionDiv = motion.div
 const MotionCard = motion(Card)
 
-const Card3D = ({ children, className }) => {
+const Card3D = ({ children, className }: { children: React.ReactNode; className?: string }) => {
   const x = useMotionValue(0)
   const y = useMotionValue(0)
   const rotateX = useTransform(y, [-300, 300], [30, -30])

@@ -13,7 +13,7 @@ import { slideIn } from "@/lib/utils"
 
 const MotionDiv = motion.div
 
-const Card3D = ({ children, className }) => {
+const Card3D = ({ children, className }: { children: React.ReactNode; className?: string }) => {
   const x = useMotionValue(0)
   const y = useMotionValue(0)
   const rotateX = useTransform(y, [-300, 300], [30, -30])
@@ -77,7 +77,10 @@ export default function Contact() {
 
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-6 mt-8 mb-8">
           <Card3D className="h-full">
-            <Card className={`${cardStyle} p-6 rounded-2xl shadow-lg transition-all duration-300 hover:shadow-xl h-full flex flex-col justify-between`}>
+            <Card 
+              className={`${cardStyle} p-6 rounded-2xl shadow-lg transition-all duration-300 hover:shadow-xl h-full flex flex-col justify-between`}
+              isDarkMode={isDarkMode} // Add this line
+            >
               <div className="flex-grow flex flex-col">
                 <h2 className={`text-2xl font-bold mb-4 ${gradientText}`}>Let's Connect</h2>
                 <p className={`mb-6 ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
@@ -108,7 +111,10 @@ export default function Contact() {
           </Card3D>
 
           <Card3D className="h-full">
-            <Card className={`${cardStyle} p-6 rounded-2xl shadow-lg transition-all duration-300 hover:shadow-xl h-full flex flex-col`}>
+            <Card 
+              className={`${cardStyle} p-6 rounded-2xl shadow-lg transition-all duration-300 hover:shadow-xl h-full flex flex-col`}
+              isDarkMode={isDarkMode} // Add this line
+            >
               <h2 className={`text-2xl font-bold mb-4 ${gradientText}`}>Get in Touch</h2>
               <form onSubmit={handleSubmit} className="space-y-4 flex-grow flex flex-col">
                 <div>

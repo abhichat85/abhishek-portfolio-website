@@ -30,7 +30,7 @@ export default function Portfolio() {
   const buttonStyle = "bg-gradient-to-r from-blue-500 to-purple-500 text-white hover:from-blue-600 hover:to-purple-600 rounded-xl px-6 py-2 shadow-md transition-all duration-300"
   const ELbuttonStyle = "bg-gradient-to-r from-blue-500 to-purple-500 text-white hover:from-blue-600 hover:to-purple-600 rounded-lg px-6 py-2 shadow-md transition-all duration-300"
 
-  const Card3D = ({ children, className }) => {
+  const Card3D = ({ children, className }: { children: React.ReactNode; className?: string }) => {
     const x = useMotionValue(0)
     const y = useMotionValue(0)
     const rotateX = useTransform(y, [-300, 300], [30, -30])
